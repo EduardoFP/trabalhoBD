@@ -65,7 +65,7 @@ CREATE TABLE NOTÍCIA
   título varchar(50) NOT NULL,
   data DATE NOT NULL,
   conteudo varchar(1500) NOT NULL,
-  foto BLOB NOT NULL,
+  foto BLOB,
   id_autor INT NOT NULL,
   id_palavras_chave INT NOT NULL,
   PRIMARY KEY (id_notícia),
