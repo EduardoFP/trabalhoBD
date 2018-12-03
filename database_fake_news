@@ -1,0 +1,119 @@
+CREATE TABLE EMPRESA
+(
+  id_empresa INT AUTO_INCREMENT NOT NULL,
+  nome varchar(50) NOT NULL,
+  PRIMARY KEY (id_empresa)
+);
+
+CREATE TABLE AUTOR
+(
+  id_autor INT AUTO_INCREMENT NOT NULL,
+  nome varchar(50) NOT NULL,
+  email varchar(50) NOT NULL,
+  PRIMARY KEY (id_autor)
+);
+
+CREATE TABLE EMPRESA_X_AUTOR
+(
+  id_empresa INT NOT NULL,
+  id_autor INT NOT NULL,
+  PRIMARY KEY (id_empresa, id_autor),
+  FOREIGN KEY (id_empresa) REFERENCES EMPRESA(id_empresa),
+  FOREIGN KEY (id_autor) REFERENCES AUTOR(id_autor)
+);
+
+CREATE TABLE FONTE
+(
+  id_fonte INT AUTO_INCREMENT NOT NULL,
+  nome varchar(50) NOT NULL,
+  PRIMARY KEY (id_fonte)
+);
+
+CREATE TABLE MEIO_DE_DIVULGAÇÃO
+(
+  id_meio INT AUTO_INCREMENT NOT NULL,
+  tipo varchar(50) NOT NULL,
+  PRIMARY KEY (id_meio)
+);
+
+CREATE TABLE ALVO
+(
+  id_alvo INT AUTO_INCREMENT NOT NULL,
+  nome varchar(50) NOT NULL,
+  PRIMARY KEY (id_alvo)
+);
+
+CREATE TABLE ACUSAÇÃO
+(
+  id_acusação INT AUTO_INCREMENT NOT NULL,
+  descrição varchar(1500) NOT NULL,
+  id_alvo INT NOT NULL,
+  PRIMARY KEY (id_acusação),
+  FOREIGN KEY (id_alvo) REFERENCES ALVO(id_alvo)
+);
+
+CREATE TABLE PALAVRAS_CHAVE
+(
+  id_palavras_chave INT AUTO_INCREMENT NOT NULL,
+  palavras varchar(50) NOT NULL,
+  PRIMARY KEY (id_palavras_chave)
+);
+
+CREATE TABLE NOTÍCIA
+(
+  id_notícia INT AUTO_INCREMENT NOT NULL,
+  título varchar(50) NOT NULL,
+  data DATE NOT NULL,
+  conteudo varchar(1500) NOT NULL,
+  foto BLOB NOT NULL,
+  id_autor INT NOT NULL,
+  id_palavras_chave INT NOT NULL,
+  PRIMARY KEY (id_notícia),
+  FOREIGN KEY (id_autor) REFERENCES AUTOR(id_autor),
+  FOREIGN KEY (id_palavras_chave) REFERENCES PALAVRAS_CHAVE(id_palavras_chave)
+);
+
+CREATE TABLE ACESSOS
+(
+  id_acesso INT AUTO_INCREMENT NOT NULL,
+  número INT NOT NULL,
+  id_notícia INT NOT NULL,
+  PRIMARY KEY (id_acesso),
+  FOREIGN KEY (id_notícia) REFERENCES NOTÍCIA(id_notícia)
+);
+
+CREATE TABLE TÓPICO
+(
+  id_topico INT AUTO_INCREMENT NOT NULL,
+  descrição varchar(1500) NOT NULL,
+  id_notícia INT NOT NULL,
+  PRIMARY KEY (id_topico),
+  FOREIGN KEY (id_notícia) REFERENCES NOTÍCIA(id_notícia)
+);
+
+CREATE TABLE FONTE_x_NOTÍCIA
+(
+  id_notícia INT  NOT NULL,
+  id_fonte INT  NOT NULL,
+  PRIMARY KEY (id_notícia, id_fonte),
+  FOREIGN KEY (id_notícia) REFERENCES NOTÍCIA(id_notícia),
+  FOREIGN KEY (id_fonte) REFERENCES FONTE(id_fonte)
+);
+
+CREATE TABLE MEIO_x_NOTÍCIA
+(
+  id_notícia INT  NOT NULL,
+  id_meio INT  NOT NULL,
+  PRIMARY KEY (id_notícia, id_meio),
+  FOREIGN KEY (id_notícia) REFERENCES NOTÍCIA(id_notícia),
+  FOREIGN KEY (id_meio) REFERENCES MEIO_DE_DIVULGAÇÃO(id_meio)
+);
+
+CREATE TABLE ALVO_x_NOTÍCIA
+(
+  id_alvo INT  NOT NULL,
+  id_notícia INT NOT NULL,
+  PRIMARY KEY (id_alvo, id_notícia),
+  FOREIGN KEY (id_alvo) REFERENCES ALVO(id_alvo),
+  FOREIGN KEY (id_notícia) REFERENCES NOTÍCIA(id_notícia)
+);
